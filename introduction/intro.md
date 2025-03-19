@@ -1,6 +1,6 @@
 # Kubernetes (K8s) Notes
 
-## Overview
+
 - **Developed by Google**: Kubernetes, commonly referred to as K8s, was developed by Google, with predecessors Borg and Omega for managing large-scale data processing.
 - **Open Source**: Open-sourced in 2014 and maintained by the Cloud Native Computing Foundation (CNCF).
 - **Purpose**: Automates the deployment, scaling, and management of containerized applications.
