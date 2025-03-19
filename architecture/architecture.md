@@ -2,84 +2,74 @@
 
 ## Components of Kubernetes Architecture
 
-
-![Screenshot 2024-07-03 164559](https://github.com/user-attachments/assets/0223ef23-6783-48e4-ae6b-004e50a18d74)
-
+![Kubernetes Architecture](https://github.com/user-attachments/assets/0223ef23-6783-48e4-ae6b-004e50a18d74)
 
 ### 1. Control Plane (Master Node)
 The control plane is the brain of the Kubernetes cluster, responsible for managing and orchestrating the entire system. It includes several key components:
 
-- ** a. API Server**: This is the main entry point for all requests to the Kubernetes cluster.  when u want to interact with your cluster your request goes through API server . It validates and processes these requests. If the API server is down, no operations can be performed in the cluster. this is front desk of k8s.
--                      
-
-  **Functions**:
+#### a. API Server
+- The main entry point for all requests to the Kubernetes cluster.
+- When you want to interact with your cluster, your request goes through the API server.
+- **Functions**:
   - **Authentication**: Verifies who you are (like a security guard checking IDs).
   - **Authorization**: Checks what actions you are allowed to perform (using Role-Based Access Control).
   - **Admission Controller**: Validates and can modify requests before they are processed. There are two types:
     - **Mutating Admission Controller**: Can change requests.
     - **Validating Admission Controller**: Checks requests for compliance without making changes.
-    - ![Screenshot 2024-07-03 164632](https://github.com/user-attachments/assets/13a6a4b1-49f9-4f6f-9d36-7aebae6b8454)
 
+![Admission Controller](https://github.com/user-attachments/assets/13a6a4b1-49f9-4f6f-9d36-7aebae6b8454)
 
-- ** b. etcd**: A distributed key-value store that holds all the configuration data and state information for the cluster. It is crucial for maintaining the cluster's state and is designed to be fault-tolerant. Data not encrypted  . No fixed schema is defined 
+#### b. etcd
+- A distributed key-value store that holds all the configuration data and state information for the cluster.
+- Crucial for maintaining the cluster's state and is designed to be fault-tolerant.
+- Data is not encrypted, and no fixed schema is defined.
 
-- ** c . Kube Scheduler**: Responsible for assigning Pods (the smallest deployable units in Kubernetes) to nodes based on resource availability and constraints. it is like event planner . it ensure desired no of pods are running . when you ask for a container to be run the scheduler decide which machine/node in your cluster should run it it considers the resource availability and other constraints while making this decision
+#### c. Kube Scheduler
+- Responsible for assigning Pods (the smallest deployable units in Kubernetes) to nodes based on resource availability and constraints.
+- Acts like an event planner, ensuring the desired number of Pods are running.
+- When you request a container to be run, the scheduler decides which node in your cluster should run it, considering resource availability and other constraints.
 
-- ** d . Kube Controller Manager**: Runs various controllers that monitor the state of the cluster and make adjustments as needed. responsible for running controllers that ensure desired state of cluster
+#### d. Kube Controller Manager
+- Runs various controllers that monitor the state of the cluster and make adjustments as needed.
+- Responsible for ensuring the desired state of the cluster is maintained.
 
-- **  e . Cloud Controller Manager**: Manages cloud-specific resources, such as load balancers and storage, allowing Kubernetes to interact with cloud infrastructure.
+#### e. Cloud Controller Manager
+- Manages cloud-specific resources, such as load balancers and storage, allowing Kubernetes to interact with cloud infrastructure.
 
 ### 2. Worker Nodes
 Worker nodes are where the containerized applications actually run. Each worker node has three main components:
 
-- ** a. Kubelet**: An agent that runs on each worker node, ensuring that Pods are running and healthy. It communicates with the API server to receive instructions and report the status of the Pods.
+#### a. Kubelet
+- An agent that runs on each worker node, ensuring that Pods are running and healthy.
+- Communicates with the API server to receive instructions and report the status of the Pods.
 
-- **b. Kube Proxy**: Manages network communication for the Pods, handling traffic routing and ensuring that network policies are enforced. is a n/w proxy that provide n/wing and cloud balancing capabilities for pods in cluster   it's like traffic cop for n/w communication either b/w pods or from external clientes to pods .
+#### b. Kube Proxy
+- Manages network communication for the Pods, handling traffic routing and ensuring that network policies are enforced.
+- Acts as a network proxy that provides networking and load balancing capabilities for Pods in the cluster.
+- **Functions**:
+  - Uses iptables for networking.
+  - Runs as a DaemonSet, installed on every worker node.
+  - Creates IP tables and IP mapping.
+  - **Cluster IP**: Private IP.
+  - **RFC1918 CIDR Range**: (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) - Not available for public use, used internally only.
 
-use ip table for networki ng
-
-it has some limited work.
-
-It runs as a DaemonSet
-
-By default, it is installed on every Worker Node
-
-Creating IP table and IP mapping
-
-ClusterIp=PrivateIP
-
-RFC1918- cidr range (10 172 192)
-
-classless inter domain range
-
-not available for public
-
-there are private range
-
-used internally only
-
-- **c . Container Runtime Interface (CRI)**: Allows Kubernetes to use different container runtimes (like Docker or containerd) to manage containers. Container runtime means to boot up the container. Like:
-
-Catainerd
-
-rocket
-
-Crio
-
-A CRI can manage multiple Pods on a single node.
+#### c. Container Runtime Interface (CRI)
+- Allows Kubernetes to use different container runtimes (like Docker or containerd) to manage containers.
+- Container runtimes are responsible for booting up the containers.
+- Examples include:
+  - **containerd**
+  - **CRI-O**
+  - **Rocket**
+- A CRI can manage multiple Pods on a single node.
 
 ### 3. Networking and Storage
 - **Container Network Interface (CNI)**: Manages networking for Pods, allowing for complex network configurations and policies.
-
 - **Container Storage Interface (CSI)**: Standardizes storage management across different storage providers, enabling dynamic volume creation and deletion.
 
 ## Tools for Managing Kubernetes
 - **kubectl**: A command-line tool used to interact with Kubernetes clusters. It allows you to deploy, manage, and scale applications.
-
 - **Minikube**: A tool that creates a single-node Kubernetes cluster on your local machine, ideal for learning and development.
-
 - **KIND (Kubernetes IN Docker)**: A tool for running Kubernetes clusters in Docker containers, primarily used for testing and development.
-
 - **Kubeadm**: A tool that simplifies the process of setting up a production-ready Kubernetes cluster.
 
 ## Conclusion
