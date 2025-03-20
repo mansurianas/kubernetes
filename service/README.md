@@ -47,6 +47,32 @@ kubectl port-forward service/nginx-service -n nginx 83:80 --address=0.0.0.0  &
 
 
 
+
+# Headless Services
+
+## What is a Headless Service?
+
+A **headless Service** is a Service without a ClusterIP. It allows you to directly access the Pods without load balancing. This is useful for applications that require direct access to individual Pods, such as databases. Headless Services are particularly useful for stateful applications where you need to connect to specific Pods.
+
+###Example YAML
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-headless-service
+spec:
+  clusterIP: None
+  selector:
+    app: my-app
+  ports:
+    - port: 80
+      targetPort: 8080
+
+
+
+
+
 ## Types of Services
 
 ### 1. ClusterIP
@@ -128,26 +154,6 @@ spec:
   externalName: example.com
 
 
-###  5. Headless Services
-
-- **Description**: A headless Service is a Service without a ClusterIP. It allows you to directly access the Pods without load balancing. This is useful for applications that require direct access to individual Pods, such as databases.
-- **Use Case**: Useful for stateful applications where you need to connect to specific Pods.
-
-
-###Example YAML
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-headless-service
-spec:
-  clusterIP: None
-  selector:
-    app: my-app
-  ports:
-    - port: 80
-      targetPort: 8080
 
 
 
