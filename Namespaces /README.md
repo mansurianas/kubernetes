@@ -23,15 +23,14 @@ You can manage namespaces in Kubernetes using both command-line commands and YAM
    ```bash
    kubectl create ns nginx
 
-
-
-   To list all namespaces, use:
+   ```
+To list all namespaces, use:
 
 ```bash
 kubectl get ns
 
 
-
+```
 # Kubernetes Namespace Management
 
 ## Deleting a Namespace
@@ -40,21 +39,31 @@ To delete a namespace you created, use the following command:
 ```bash
 kubectl delete ns nginx
 
+```
 Namespace YAML Manifest
+
+```yml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: nginx
 
+
+```
 TO create 
 
+```bash
+kubectl create -f namespace.yml
+```
+
+```
+To delete
+
+```bash
+ 
 kubectl create -f namespace.yml
 
-
-To delete 
-kubectl create -f namespace.yml
-
-
+```
 
 When to Use create vs apply
 create: Use this command to create a resource from scratch. If the resource already exists, the command will fail. Use create when you are sure the resource does not exist yet.
@@ -63,7 +72,7 @@ Example:
 ```bash
 kubectl create -f namespace.yml
 
-
+```
 apply: Use this command to create or update a resource. If the resource already exists, apply will update it with the configuration in the YAML file. Use apply when you want to ensure that the resource matches the YAML file configuration, whether creating it for the first time or updating it.
 
 Example:
