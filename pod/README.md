@@ -30,7 +30,7 @@ spec:
       ports:
         - containerPort: 80
 
-
+```
 
 ## Managing Pods in Kubernetes
 
@@ -40,13 +40,13 @@ To create a Pod defined in a YAML file, use the following command:
 
 ```bash
 kubectl apply -f nginx-pod.yml
-
+```
 Performing a Dry Run
 If you want to see what would happen if you applied the configuration without actually creating or modifying any resources, you can perform a dry run:
 
 ```bash
 kubectl apply -f nginx-pod.yml --dry-run=client
-
+```
 TO list all pods
 
 ```bash
