@@ -49,6 +49,7 @@ spec:
           ports:
             - containerPort: 80
 
+```
 
 
 
@@ -63,7 +64,7 @@ To apply a Deployment defined in a YAML file, use the following command:
 kubectl apply -f deployment.yml
 
 
-
+```
 
 ### Dry Run
 
@@ -74,7 +75,7 @@ kubectl apply -f deployment.yml --dry-run=client
 
 
 
-
+```
 
 To list all Pods in a specific namespace (for example, the `nginx` namespace), use the following command:
 
@@ -84,7 +85,7 @@ kubectl get pods -n nginx
 
 
 
-
+```
 ### Scaling a Deployment
 
 You can scale the number of replicas in a Deployment using the following command:
@@ -95,7 +96,7 @@ kubectl scale deployment nginx-deployment --replicas=5
 
 
 
-
+```
 
 ### Updating a Deployment or rolll back 
 
@@ -104,13 +105,14 @@ To update the image of a Deployment, you can use the following command:
 ```bash
 kubectl set image deployment/nginx-deployment nginx=nginx:1.0 -n nginx
 
+```
 To check the status of the Deployment: 
 
 ```bash
 kubectl get deployment nginx-deployment
 
 
-
+```
 Rolling Back a Deployment
 If an update fails or you want to revert to a previous version, you can roll back the Deployment using the following command:
 
@@ -120,7 +122,7 @@ kubectl rollout undo deployment/nginx-deployment
 
 
 
-
+```
 
 # Understanding Labels and Selectors in Kubernetes
 
@@ -143,7 +145,7 @@ metadata:
     environment: production
     version: v1
 
-
+```
 
 
 ## What are Selectors?
