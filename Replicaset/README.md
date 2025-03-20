@@ -47,7 +47,7 @@ spec:
           ports:
             - containerPort: 80
 
-
+```
 
 
 
@@ -65,18 +65,19 @@ To create a ReplicaSet defined in a YAML file, use the following command:
 ```bash
 kubectl apply -f nginx-replicaset.yml
 
-
+```
 To list all ReplicaSets in the current namespace, use the following command:
 
 ```bash
 kubectl get replicasets
 
+```
 If you want to see ReplicaSets in a specific namespace, you can use:
 
 ```bash
 kubectl get replicasets -n <namespace>
 
-
+```
 Replace <namespace> with the name of your desired namespace.
 
 Describing a ReplicaSet
@@ -85,7 +86,10 @@ To get detailed information about a specific ReplicaSet, use the following comma
 
 ```bash
 kubectl describe replicaset <replicaset-name>
+
+```
 Replace <replicaset-name> with the name of your ReplicaSet (e.g., nginx-replicaset).
+
 
 Example
 For example, to describe the nginx-replicaset, you would run:
