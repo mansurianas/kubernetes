@@ -32,16 +32,23 @@ spec:
       port: 80 # port in the service
       targetPort: 80 # port in the pod
 
+```
+
 vim service.yml
 
 kubernetes apply -f service.yml
+
+
 kubectl get service -n nginx
+
 
 kubectl port-forward service/nginx-service -n nginx 83:80 --address=0.0.0.0
 
 
 for background: 
 kubectl port-forward service/nginx-service -n nginx 83:80 --address=0.0.0.0  &     
+
+
 
 
 
@@ -69,7 +76,7 @@ spec:
     - port: 80
       targetPort: 8080
 
-
+```
 
 
 
@@ -94,7 +101,7 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
+```
 
 ### 2.  NodePort
 
@@ -118,6 +125,9 @@ spec:
       targetPort: 8080
       nodePort: 30007
 
+
+```
+
 ### 3.  LoadBalancer
 - **Description**: Exposes the Service externally using a cloud provider’s load balancer. The cloud provider will automatically provision a load balancer and assign a public IP address to the Service.
 - **Use Case**: Ideal for production environments where you want to expose your application to the internet.
@@ -135,7 +145,7 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
+```
 
 ###  4. ExternalName
 
@@ -155,7 +165,7 @@ spec:
 
 
 
-
+```
 
 Applying a Service
 To create a Service defined in a YAML file, use the following command:
@@ -163,14 +173,14 @@ To create a Service defined in a YAML file, use the following command:
 ```bash
 kubectl apply -f my-service.yml
 
-
+```
 Getting Services
 To list all Services in a specific namespace (for example, the nginx namespace), use the following command:
 
 ```bash
 kubectl get services -n nginx
 
-
+```
 Describing a Service
 To get detailed information about a specific Service, use the following command:
 
