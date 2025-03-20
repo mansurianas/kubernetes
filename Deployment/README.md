@@ -97,6 +97,26 @@ kubectl scale deployment nginx-deployment --replicas=5
 
 
 
+### Updating a Deployment or rolll back 
+
+To update the image of a Deployment, you can use the following command:
+
+```bash
+kubectl set image deployment/nginx-deployment nginx=nginx:1.0 -n nginx
+
+To check the status of the Deployment: 
+
+```bash
+kubectl get deployment nginx-deployment
+
+
+
+Rolling Back a Deployment
+If an update fails or you want to revert to a previous version, you can roll back the Deployment using the following command:
+
+```bash
+kubectl rollout undo deployment/nginx-deployment
+
 
 
 
