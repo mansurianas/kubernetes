@@ -38,7 +38,7 @@ spec:
         - containerPort: 80
 
 
-
+```
 
 
 ### 2. Nginx Service Manifest in "nginx" Namespace
@@ -60,7 +60,7 @@ spec:
       targetPort: 80  # port in the pod
 
 
-
+```
 
 ### 3. Nginx Deployment Manifest in "nginx" Namespace
 
@@ -88,7 +88,7 @@ spec:
           ports:
             - containerPort: 80
 
-
+```
 
 
 ## Nginx Namespace Deployment Steps
