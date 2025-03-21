@@ -100,8 +100,8 @@ kubectl apply -f service.yml
 ## Step 4: Verify Deployment and Service
 
 ```
-kubectl get deployment -n nginx
-kubectl get svc -n nginx
+kubectl get deployment -n nginx  -- result  nginx-deployment(phlele ki)  and nodejs-deployment 
+kubectl get svc -n nginx --- result  nginx-serice 
 
 ```
 ## Step 5: Create NGINX Service
