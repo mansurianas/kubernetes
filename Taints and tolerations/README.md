@@ -71,12 +71,18 @@ kubectl taint nodes <node-name> dedicated=high-priority:NoSchedule
 ```
 kubectl taint node kind-worker2  prod=
 true:NoSchedule
+
 ```
+kubectl apply -f deployment.yml
+kubectl get pods -n nginx
+it  creates but  status -pending 
+
 # toleration 
 
 ```
 kubectl taint node kind-worker2  prod=
 true:NoSchedule-
+
 
 ```
 
