@@ -436,5 +436,277 @@ Note: The output shows multiple replicas of the apache-deployment pod are runnin
 
 
 
+now create for phontiqe app
 
+# Node.js Application Deployment (Phontiqe) on Kubernetes
+
+This guide outlines the steps to deploy a Node.js application named Phontiqe on a Kubernetes cluster, including creating a namespace, deployment, and Horizontal Pod Autoscaler (HPA).
+
+## Step 1: Navigate to the Node.js Phontiqe Directory
+
+```bash
+cd node-phontiqe
+
+```
+```
+cd k8s
+
+```
+
+vim deployment.yml
+```
+
+```yml
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nodejs-deployment
+  namespace: nodejs
+  labels:
+    app: nodejs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      containers:
+        - name: nodejs-app
+          image: lucky0111/nodejs:latest
+          ports:
+           - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+```
+vim hpa.yml
+
+```yml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nodejs-hpa
+  namespace: nodejs
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nodejs-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 5
+
+
+```
+
+kubectl apply -f namespace.yml -f deployment.yml
+
+
+```
+
+kubectl get pods -n nodejs
+```
+```
+NAME                                 READY   STATUS    RESTARTS   AGE
+nodejs-deployment-79979f9f97-xrk94   0/1     Running   0          18s
+```
+
+note : only one pod
+
+now apply hpa 
+
+```
+kubectl apply -f hpa.yml
+```
+
+This command creates the Horizontal Pod Autoscaler for the Node.js deployment, allowing it to automatically scale based on CPU utilization.
+
+
+```
+kubectl get hpa -n nodejs
+```
+```
+kubectl get pods -n nodejs
+```
+
+```
+NAME                                 READY   STATUS    RESTARTS   AGE
+nodejs-deployment-79979f9f97-2kx8k   1/1     Running   0
+ 110s
+nodejs-deployment-79979f9f97-9n6rr   1/1     Running   0
+ 110s
+nodejs-deployment-79979f9f97-gdt58   1/1     Running   0
+ 97s
+nodejs-deployment-79979f9f97-srv4b   1/1     Running   0
+ 110s
+nodejs-deployment-79979f9f97-xrk94   1/1     Running   0
+ 36m
+
+```
+
+
+here pods are increased 
+
+
+
+
+
+#  Setting Up Vertical Pod Autoscaler (VPA) in Kubernetes
+
+
+
+Step 1: Clone the VPA Repository
+To begin, clone the Vertical Pod Autoscaler repository from GitHub:
+
+```bash
+git clone https://github.com/kubernetes/autoscaler.git
+
+```
+Step 2: Navigate to the VPA Directory
+Change your current directory to the Vertical Pod Autoscaler folder:
+
+```bash
+cd autoscaler/vertical-pod-autoscaler
+
+```
+
+
+Step 3: Run the Installation Script
+
+Execute the installation script to set up the necessary components for VPA in your Kubernetes cluster:
+
+```bash
+./hack/vpa-up.sh
+```
+
+Step 4: Verify the VPA Pods
+After the installation is complete, verify that the VPA components are running in the kube-system namespace:
+
+```bash
+kubectl get pods -n kube-system
+
+```
+
+
+This command will list all the pods in the kube-system namespace, including those related to the Vertical Pod Autoscaler.  
+
+
+
+
+# Managing Vertical Pod Autoscaler (VPA) in Kubernetes
+
+This document outlines the steps taken to create and manage a Vertical Pod Autoscaler (VPA) for an Apache deployment in the `apache` namespace.
+
+## Step 1: Create VPA Configuration
+
+### Open VPA Configuration File
+
+```yml
+vim vpa.yml
+
+kind: VerticalPodAutoscaler
+apiVersion: autoscaling.k8s.io/v1
+metadata:
+  name: apache-vpa
+  namespace: apache
+spec:
+  targetRef:
+    name: apache-deployment
+    apiVersion: apps/v1
+    kind: Deployment
+  updatePolicy:
+    updateMode: "Auto"
+
+
+```
+```
+kubectl get hpa -n apche
+
+
+```
+```
+kubectl get hpa -n apche
+```
+```
+kubectl apply -f vpa.yml
+```
+```
+kubectl get vpa -n apache
+```
+
+```
+NAME         MODE   CPU   MEM       PROVIDED   AGE
+apache-vpa   Auto   25m   262144k   True       15m
+```
+
+```
+
+NAME         MODE   CPU   MEM       PROVIDED   AGE
+apache-vpa   Auto   25m   262144k   True       15m
+
+
+```
+Note: The output shows that the VPA is in Auto mode, with a CPU recommendation of 25m and memory of 262144k
+
+
+
+```
+
+sudo -E kubectl port-forward service/apache-service -n apache 83:80 --address=0.0.0.0 &
+
+```
+
+```
+kubectl run -i --tty load-generator --image=busybox --namespace=apache -- /bin/sh
+
+```
+
+```
+while true; do wget -q -O- http://apache-service.apache .svc.cluster.local; done
+
+```
+this command continuously sends requests to the Apache service, generating load to test the autoscaling behavior.
+
+
+kubectl top pod -n apache
+
+
+
+
+```
+kubectl get vpa -n apache
+
+```
+```
+NAME         MODE   CPU   MEM       PROVIDED   AGE
+apache-vpa   Auto   163m   262144k   True       13m
+
+```
+Note: The output indicates that the CPU recommendation has increased to 163m, reflecting the load generated by the load generator.
 
