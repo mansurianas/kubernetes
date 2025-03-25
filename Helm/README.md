@@ -279,6 +279,7 @@ Successfully packaged chart and saved it to: /home/ubuntu/k8s-production/helm/ap
 prd-apache ./apache-helm -n prd-apache
 
 ```
+```
 Release "prd-apache" has been upgraded. Happy Helming!
 NAME: prd-apache
 LAST DEPLOYED: Tue Mar 25 17:17:35 2025
@@ -291,12 +292,14 @@ NOTES:
   export CONTAINER_PORT=$(kubectl get pod --namespace prd-apache $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace prd-apache port-forward $POD_NAME 8080:$CONTAINER_PORT
+```
 
-
+```
 ```
 ```
 kubectl get pods -n dev-apache
 ```
+
 result 
 ```
 NAME                                      READY   STATUS    RESTARTS   AGE
@@ -304,11 +307,14 @@ dev-apache-apache-helm-58dd8c6f59-kc9g9   1/1     Running   0          10m
 dev-apache-apache-helm-58dd8c6f59-lxjvr   1/1     Running
 ```
 ```
+```
+```
 kubectl get pods -n  prd-apache
+```
 
 ```
 ```
-
+```
 NAME                                      READY   STATUS    RESTARTS   AGE
 prd-apache-apache-helm-5867645b75-bftpr   1/1     Running   0          75s
 prd-apache-apache-helm-5867645b75-mc995   1/1     Running   0          78s
@@ -352,7 +358,7 @@ result:  2 pods
 
 ```
 
-
+```
 
 # Now do same for Node js app 
 
