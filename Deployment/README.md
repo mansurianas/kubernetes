@@ -124,6 +124,12 @@ kubectl rollout undo deployment/nginx-deployment
 
 ```
 
+
+Can you describe a zero-downtime deployment?
+```
+Yes. Using the rolling update strategy in Deployments, Kubernetes updates one pod at a time while
+keeping the app running. This ensures users experience no downtime during updates.
+```
 # Understanding Labels and Selectors in Kubernetes
 
 ## What are Labels?
